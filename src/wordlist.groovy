@@ -30,8 +30,7 @@ assert evenWords == ["in", "computer", "be", "solved", "by", "adding", "of"]
 // See the JUnit @Before and @After methods at the bottom of this file.
 // The text file is "SonnetI.txt" (Shakespeare's first sonnet) which is
 // located at the root of this NetBeans project.
-def lines = 0
-new File("../SonnetI.txt").eachLine{ lines++ }
+def lines = new File("../SonnetI.txt").readLines().count({ it })
 
 assert lines == 14;
 
@@ -148,3 +147,9 @@ assert !wordCount["lambda"]
 // a keys of "f" and "b". The value corresponding to "b" would be a map with
 // a key of 3 with a value of [bar baz] (a list of Strings) and a key of 4
 // with a value of [bazz] (a one-element list of String).
+def nestedMap = new File("../SonnetI.txt").text.split("\\W+").groupBy({ it.substring(0,1) }, { it.length() })
+
+assert nestedMap.F[4] == ["From", "Feed"]
+assert nestedMap.b[2] == ["by", "be", "by"]
+assert nestedMap["t"][3] == ["the", "thy", "thy", "thy", "too", "the", "the", "thy", "the", "the", "the"]
+assert nestedMap.b[6] == ["beauty", "bright"]
